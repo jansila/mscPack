@@ -1,0 +1,11 @@
+Package: finalPack
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Jan Sila
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: GPL-3
+LazyData: TRUE
+Depends: MASS,matrixcalc,reshape2,ggplot2,Matrix
+Imports: miscTools,stats,fBasics
