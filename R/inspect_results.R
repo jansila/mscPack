@@ -1,6 +1,24 @@
 
 #statistics
-#t test of returns - significance from
+#z test of returns - significance from
+testRet<-function(data){
+  len<-dim(data)[2]
+  pes<-vector("list",len)
+  l<-nrow(data[,1]$returns)
+
+  for(i in 1:len){
+
+    df<-data.frame(data[,i]$returns)
+    p<-apply(df,2,zTest)
+    r<-(exp(colSums(df))-1)
+    ans<-rbind(r,p)
+
+    pes[[i]]<-ans}
+
+  pes}
+
+
+
 
 #difference of ES
 
@@ -8,14 +26,19 @@
 #stable parameters
 
 res_stablePar<-function(data){
+  len<-ncol(data)
   m<-matrix(ncol=ncol(data),nrow=4)
-  n<-m
+  n<-matrix(ncol=ncol(data),nrow=4)
   for(i in 1:len){
-    m[,i]<-stableFit(data[,i]$returns$regular)
-    n[,i]<-stableFit(data[,i]$returns$denoised)
+    m[,i]<-mleFit(data[,i]$returns$regular)$fit$estimate
+    n[,i]<-mleFit(data[,i]$returns$denoised)$fit$estimate
   }
-  ans<-list("regular"=m,"denoised"=n)
-  ans
+  par<-list("regular"=m,"denoised"=n)
+  par
+#  data.frame(t(par$regular)) %>% melt() %>%
+#  ggplot(.,aes(variable,value))+geom_boxplot(alpha=0,colour=cols[2])+
+#  geom_boxplot(data=melt(data.frame(t(par$denoised))), aes(variable,value),colour=cols[1],alpha=0)+
+#    ggtitle("Comparison of stable coefficients")
 }
 
 
@@ -141,4 +164,5 @@ res_histret<-function(data){
 
 
   }
-  pes}
+  pes
+  }

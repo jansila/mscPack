@@ -64,13 +64,13 @@ denStable <- function(input, vec=NULL, alpha=1.8, beta=0, gamma=1, delta=0,
 
 
 #' @useDynLib stable stable
-probStable <- function(y, loc=0,disp=1,skew=0,tail=2,eps=1.0e-6){
+probStable <- function(y, alpha=2,beta=0,gamma=1,delta=0,eps=1.0e-6){
   if (alpha == 2 && beta==0) {
-    return(pnorm(y, mean = 0, sd = 1, log=log))
+    return(pnorm(y, mean = 0, sd = sqrt(2)))
   } else if (alpha == 1 && beta == 0) {
     return(pcauchy(y, log=log))}
 
-
+loc=delta;disp=gamma;skew=beta;tail=alpha;
 
   yy <- (y-loc)/disp
   ly <- length(yy)

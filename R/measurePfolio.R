@@ -1,3 +1,25 @@
+
+
+zTest<-function(series,vec=NULL){
+if(is.null(vec)){
+    f<-mleFit(series)$fit$estimate
+  alpha<-f[1];beta<-f[2]
+  gamma<-f[3];delta<-f[4]
+  }else{
+  alpha<-vec[1];beta<-vec[2]
+  gamma<-vec[3];delta<-vec[4]}
+
+
+m<-mean(series)
+chi<-mean(abs(series-m))
+z<-m/chi*length(series)^(1-(1/alpha))
+p<-1-probStable(z,alpha,beta,chi,0)
+p
+}
+
+
+
+
 # Measure portfolios
 
 rebalbyQ<-function(data,MaxQ=16,Maxpfolios=NULL){
